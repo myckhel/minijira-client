@@ -44,7 +44,7 @@ export function LoginForm() {
   const displayError = localError || error;
 
   return (
-    <div>
+    <div className="text-center border border-gray-300 p-6 rounded-md">
       <div className="text-center mb-6">
         <h2 className="text-2xl font-semibold text-gray-900">
           Sign in to your account
@@ -94,6 +94,7 @@ export function LoginForm() {
             prefix={<MailOutlined className="text-gray-400" />}
             placeholder="Enter your email"
             autoComplete="email"
+            className="text-center"
           />
         </Form.Item>
 
@@ -109,6 +110,7 @@ export function LoginForm() {
             prefix={<LockOutlined className="text-gray-400" />}
             placeholder="Enter your password"
             autoComplete="current-password"
+            className="text-center"
           />
         </Form.Item>
 
@@ -117,8 +119,7 @@ export function LoginForm() {
             type="primary"
             htmlType="submit"
             loading={isLoading}
-            block
-            className="h-10 font-medium"
+            className="h-10 font-medium w-1/2 mx-auto"
           >
             {isLoading ? "Signing in..." : "Sign in"}
           </Button>
