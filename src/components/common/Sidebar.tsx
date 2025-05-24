@@ -4,6 +4,7 @@ import {
   DashboardOutlined,
   ProjectOutlined,
   CheckSquareOutlined,
+  AppstoreOutlined,
   UserOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
@@ -23,6 +24,12 @@ export function Sidebar({ collapsed }: SidebarProps) {
       icon: <DashboardOutlined />,
       label: "Dashboard",
       onClick: () => navigate("/dashboard"),
+    },
+    {
+      key: "/board",
+      icon: <AppstoreOutlined />,
+      label: "Board",
+      onClick: () => navigate("/board"),
     },
     {
       key: "/projects",
