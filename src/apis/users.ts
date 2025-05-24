@@ -1,31 +1,31 @@
 import { apiClient } from "../services/api";
-import type { ApiResponse } from "../types";
+import type { User, ApiResponse } from "../types";
 
-export interface UserResponse {
-  id: string;
-  email: string;
-  name: string;
-  role: string;
-  createdAt: string;
-  updatedAt: string;
-}
+export const userAPI = {
+  // Get all users
+  getUsers: async (): Promise<User[]> => {
+    const response = await apiClient.get<ApiResponse<User[]>>("/users");
+    return response.data.data || [];
+  },
 
-// Get all users (admin only)
-export const getUsers = async (): Promise<UserResponse[]> => {
-  const response = await apiClient.get<ApiResponse<UserResponse[]>>("/users");
-  return response.data.data || [];
-};
+  // Get user by ID
+  getUser: async (id: string): Promise<User> => {
+    const response = await apiClient.get<ApiResponse<User>>(`/users/${id}`);
+    return response.data.data!;
+  },
 
-// Get current user profile
-export const getCurrentUser = async (): Promise<UserResponse> => {
-  const response = await apiClient.get<ApiResponse<UserResponse>>("/users/me");
-  return response.data.data!;
-};
+  // Get current user profile
+  getCurrentUser: async (): Promise<User> => {
+    const response = await apiClient.get<ApiResponse<User>>("/users/me");
+    return response.data.data!;
+  },
 
-// Get user by ID
-export const getUserById = async (id: string): Promise<UserResponse> => {
-  const response = await apiClient.get<ApiResponse<UserResponse>>(
-    `/users/${id}`
-  );
-  return response.data.data!;
+  // Update user
+  updateUser: async (id: string, data: Partial<User>): Promise<User> => {
+    const response = await apiClient.patch<ApiResponse<User>>(
+      `/users/${id}`,
+      data
+    );
+    return response.data.data!;
+  },
 };

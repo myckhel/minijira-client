@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { Typography, Button, Space, Segmented } from "antd";
 import {
   AppstoreOutlined,
@@ -7,34 +7,45 @@ import {
   PlusOutlined,
 } from "@ant-design/icons";
 import { useProjectStore } from "../stores/projectStore";
+import { useUserStore } from "../stores/userStore";
 import KanbanBoard from "../components/features/tasks/KanbanBoard";
+import TaskList from "../components/features/tasks/TaskList";
+import TaskModal from "../components/features/tasks/TaskModal";
+import type { Task } from "../types";
 
 const { Title } = Typography;
 
 type ViewMode = "list" | "board";
 
 export default function TasksPage() {
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { fetchProjects } = useProjectStore();
+  const { fetchUsers } = useUserStore();
   const [viewMode, setViewMode] = useState<ViewMode>("board");
+  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+  const [editingTask, setEditingTask] = useState<Task | undefined>();
 
   const selectedProjectId = searchParams.get("projectId") || undefined;
 
-  // Fetch projects on mount
+  // Fetch projects and users on mount
   useEffect(() => {
     fetchProjects();
-  }, [fetchProjects]);
+    fetchUsers();
+  }, [fetchProjects, fetchUsers]);
 
   const handleCreateTask = () => {
-    // TODO: Implement task creation modal
-    console.log("Create task for project:", selectedProjectId);
+    setEditingTask(undefined);
+    setIsTaskModalOpen(true);
   };
 
-  const handleViewBoard = () => {
-    navigate(
-      `/board${selectedProjectId ? `?projectId=${selectedProjectId}` : ""}`
-    );
+  const handleEditTask = (task: Task) => {
+    setEditingTask(task);
+    setIsTaskModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsTaskModalOpen(false);
+    setEditingTask(undefined);
   };
 
   return (
@@ -85,11 +96,21 @@ export default function TasksPage() {
           <KanbanBoard projectId={selectedProjectId} />
         ) : (
           <div className="p-6">
-            <p>Task list view - coming soon!</p>
-            <Button onClick={handleViewBoard}>View Board Instead</Button>
+            <TaskList
+              projectId={selectedProjectId}
+              onEditTask={handleEditTask}
+            />
           </div>
         )}
       </div>
+
+      {/* Task Modal */}
+      <TaskModal
+        open={isTaskModalOpen}
+        task={editingTask}
+        onClose={handleCloseModal}
+        projectId={selectedProjectId}
+      />
     </div>
   );
 }
