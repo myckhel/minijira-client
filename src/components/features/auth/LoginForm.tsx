@@ -44,7 +44,7 @@ export function LoginForm() {
   const displayError = localError || error;
 
   return (
-    <div className="text-center border border-gray-300 p-6 rounded-md">
+    <div className="text-center border border-gray-200 p-6 rounded-lg max-w-sm mx-auto shadow-md">
       <div className="text-center mb-6">
         <h2 className="text-2xl font-semibold text-gray-900">
           Sign in to your account
