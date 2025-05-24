@@ -60,15 +60,6 @@ export function LoginForm() {
         </p>
       </div>
 
-      {/* Demo credentials alert */}
-      <Alert
-        message="Demo Credentials"
-        description="Email: demo@example.com | Password: password"
-        type="info"
-        showIcon
-        className="mb-4"
-      />
-
       {displayError && (
         <Alert
           message={displayError}
