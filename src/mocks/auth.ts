@@ -48,7 +48,7 @@ export const mockAuthAPI = {
 
     return {
       user,
-      access_token: generateMockToken(),
+      token: generateMockToken(),
     };
   },
 
@@ -73,7 +73,7 @@ export const mockAuthAPI = {
 
     return {
       user: newUser,
-      access_token: generateMockToken(),
+      token: generateMockToken(),
     };
   },
 

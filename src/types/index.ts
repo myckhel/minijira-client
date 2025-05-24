@@ -3,6 +3,7 @@ export interface ApiResponse<T = any> {
   success: boolean;
   data?: T;
   message?: string;
+  error?: string;
   timestamp?: string;
   path?: string;
 }
@@ -30,7 +31,7 @@ export interface RegisterCredentials {
 }
 
 export interface AuthResponse {
-  access_token: string;
+  token: string;
   user: User;
 }
 
@@ -44,6 +45,7 @@ export interface Project {
   owner: User;
   createdAt: string;
   updatedAt: string;
+  tasks?: ProjectTask[];
   _count?: {
     tasks: number;
   };
@@ -59,6 +61,15 @@ export interface UpdateProjectData {
   name?: string;
   description?: string;
   color?: string;
+}
+
+// Lightweight Task interface for Project details
+export interface ProjectTask {
+  id: string;
+  title: string;
+  status: TaskStatus;
+  assignee?: User;
+  createdAt: string;
 }
 
 // Task Types

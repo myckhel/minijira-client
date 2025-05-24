@@ -48,7 +48,7 @@ export const useAuthStore = create<AuthState>()(
           const response = await authAPI.login(credentials);
 
           // Store token and user data
-          storeToken(response.access_token);
+          storeToken(response.token);
           storeUser(response.user);
 
           set({
@@ -77,7 +77,7 @@ export const useAuthStore = create<AuthState>()(
           const response = await authAPI.register(credentials);
 
           // Store token and user data
-          storeToken(response.access_token);
+          storeToken(response.token);
           storeUser(response.user);
 
           set({
@@ -135,7 +135,7 @@ export const useAuthStore = create<AuthState>()(
             isLoading: false,
             error: null,
           });
-        } catch (_error) {
+        } catch {
           // Token is invalid, clear auth data
           clearAuthData();
           set({

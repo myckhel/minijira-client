@@ -67,7 +67,7 @@ export async function apiRequest<T>(
 
   // For successful responses, return the data directly
   if (response.data.success !== false) {
-    return response.data.data || response.data;
+    return (response.data.data || response.data) as T;
   }
 
   // If the response indicates failure, throw an error

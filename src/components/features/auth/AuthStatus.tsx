@@ -1,4 +1,3 @@
-import React from "react";
 import { Card, Typography, Tag, Button, Space } from "antd";
 import { useAuthStore } from "../../../stores/authStore";
 

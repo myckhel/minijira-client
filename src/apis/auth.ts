@@ -1,5 +1,4 @@
 import { apiRequest } from "../services/api";
-import { mockAuthAPI } from "../mocks/auth";
 import type {
   AuthResponse,
   LoginCredentials,
@@ -8,16 +7,12 @@ import type {
 } from "../types";
 
 // Use mock API for development/testing
-const USE_MOCK_API = true;
 
 class AuthAPI {
   /**
    * Register a new user
    */
   async register(credentials: RegisterCredentials): Promise<AuthResponse> {
-    if (USE_MOCK_API) {
-      return mockAuthAPI.register(credentials);
-    }
     return apiRequest<AuthResponse>("POST", "/auth/register", credentials);
   }
 
@@ -25,9 +20,6 @@ class AuthAPI {
    * Login user
    */
   async login(credentials: LoginCredentials): Promise<AuthResponse> {
-    if (USE_MOCK_API) {
-      return mockAuthAPI.login(credentials);
-    }
     return apiRequest<AuthResponse>("POST", "/auth/login", credentials);
   }
 
@@ -35,10 +27,7 @@ class AuthAPI {
    * Get current user profile
    */
   async getCurrentUser(): Promise<User> {
-    if (USE_MOCK_API) {
-      return mockAuthAPI.getCurrentUser();
-    }
-    return apiRequest<User>("GET", "/users/profile");
+    return apiRequest<User>("GET", "/users/me");
   }
 
   /**
