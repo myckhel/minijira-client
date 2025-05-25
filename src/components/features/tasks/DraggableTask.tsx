@@ -35,6 +35,7 @@ function DraggableTask({ task, isDragging = false }: DraggableTaskProps) {
     transition: transition || "all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94)",
     opacity: isDragging || isSortableDragging ? 0.7 : 1,
     zIndex: isDragging || isSortableDragging ? 1000 : "auto",
+    marginBottom: "10px",
   };
 
   const handleMouseDown = (e: React.MouseEvent) => {
