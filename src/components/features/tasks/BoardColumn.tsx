@@ -38,29 +38,44 @@ function BoardColumn({ column }: BoardColumnProps) {
     >
       <Card
         size="small"
-        className={`flex-1 shadow-lg hover:shadow-xl transition-shadow duration-200 ${
-          isOver ? "border-blue-400 shadow-blue-200/50" : "border-gray-200"
-        }`}
+        className={`
+          flex-1 border border-gray-200 transition-all duration-300 ease-out rounded-xl
+          ${
+            isOver
+              ? "border-blue-400 shadow-lg shadow-blue-200/30 bg-blue-50/30"
+              : "shadow-md hover:shadow-lg hover:border-gray-300"
+          }
+          backdrop-blur-sm bg-white/95
+        `}
         bodyStyle={{ padding: 0, height: "100%" }}
-        headStyle={{ 
-          backgroundColor: '#fafafa',
-          borderBottom: '1px solid #f0f0f0',
-          padding: '8px 16px'
+        headStyle={{
+          background: `linear-gradient(135deg, ${column.color}08 0%, ${column.color}15 50%, #fafafa 100%)`,
+          borderBottom: `3px solid ${column.color}30`,
+          padding: "16px 20px",
+          borderRadius: "12px 12px 0 0",
+          position: "relative",
+          overflow: "hidden",
         }}
         title={
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-3">
               <div
-                className="w-3 h-3 rounded-full"
+                className="w-5 h-5 rounded-full ring-2 ring-white shadow-lg flex items-center justify-center"
                 style={{ backgroundColor: column.color }}
-              />
-              <span className="font-medium text-xs sm:text-sm">
+              >
+                <div className="w-2 h-2 bg-white rounded-full opacity-80" />
+              </div>
+              <span className="font-bold text-sm sm:text-base text-gray-800 tracking-wide">
                 {column.title}
               </span>
               <Badge
                 count={column.tasks.length}
-                style={{ backgroundColor: column.color }}
-                className="text-xs"
+                style={{
+                  backgroundColor: column.color,
+                  boxShadow: "0 4px 8px rgba(0,0,0,0.15)",
+                  fontWeight: "600",
+                }}
+                className="text-xs font-bold"
               />
             </div>
             <Button
@@ -68,33 +83,42 @@ function BoardColumn({ column }: BoardColumnProps) {
               size="small"
               icon={<PlusOutlined />}
               onClick={handleAddTask}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-gray-500 hover:text-white hover:bg-blue-500 hover:border-blue-500 transition-all duration-300 border border-gray-300 rounded-lg shadow-sm hover:shadow-lg hover:scale-110 active:scale-95"
             />
           </div>
         }
       >
-        <div className="p-2 sm:p-3 h-full overflow-y-auto bg-gray-50/50">
+        <div className="p-3 sm:p-4 h-full overflow-y-auto bg-gradient-to-b from-gray-50/30 to-gray-50/80 backdrop-blur-sm">
           <SortableContext
             items={column.tasks.map((task) => task.id)}
             strategy={verticalListSortingStrategy}
           >
-            <div className="space-y-2 xl:space-y-3 min-h-[150px] xl:min-h-[200px]">
+            <div className="space-y-3 xl:space-y-4 min-h-[200px] xl:min-h-[250px]">
               {column.tasks.length > 0 ? (
                 column.tasks.map((task) => (
                   <DraggableTask key={task.id} task={task} />
                 ))
               ) : (
                 <div
-                  className={`border-2 border-dashed rounded-lg p-3 xl:p-4 text-center transition-colors ${
-                    isOver
-                      ? "border-blue-400 bg-blue-50"
-                      : "border-gray-200 bg-gray-50"
-                  }`}
+                  className={`
+                    border-2 border-dashed rounded-2xl p-8 xl:p-10 text-center 
+                    transition-all duration-300 ease-out relative overflow-hidden
+                    ${
+                      isOver
+                        ? "border-blue-400 bg-gradient-to-br from-blue-50 to-blue-100 shadow-lg scale-102 transform"
+                        : "border-gray-300 bg-gradient-to-br from-gray-50/70 to-gray-100/50 hover:bg-gradient-to-br hover:from-gray-100/80 hover:to-gray-200/60 hover:border-gray-400"
+                    }
+                    before:absolute before:inset-0 before:bg-gradient-to-br before:from-transparent before:via-white/10 before:to-transparent before:opacity-0 before:transition-opacity before:duration-300 hover:before:opacity-100
+                  `}
                 >
                   <Empty
                     image={Empty.PRESENTED_IMAGE_SIMPLE}
                     description={
-                      <span className="text-gray-400 text-xs xl:text-sm">
+                      <span
+                        className={`font-medium text-sm xl:text-base transition-colors duration-200 ${
+                          isOver ? "text-blue-600" : "text-gray-500"
+                        }`}
+                      >
                         {isOver ? "Drop task here" : "No tasks"}
                       </span>
                     }
