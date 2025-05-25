@@ -1,0 +1,522 @@
+/* Hugging Face Design System - Global CSS Variables and Components */
+
+/* CSS Custom Properties for Hugging Face Design System */
+:root {
+  /* HF Primary Colors */
+  --hf-yellow-primary: #ffd21e;
+  --hf-orange-primary: #ff9d00;
+  --hf-gray-primary: #6b7280;
+
+  /* HF Color Palette */
+  --hf-50: #fefdf8;
+  --hf-100: #fdfaed;
+  --hf-200: #fbf2d1;
+  --hf-300: #f9e7a8;
+  --hf-400: #f6d56e;
+  --hf-500: #ffd21e;
+  --hf-600: #ff9d00;
+  --hf-700: #e88700;
+  --hf-800: #c56d00;
+  --hf-900: #a35700;
+
+  /* Semantic Colors */
+  --hf-background: #ffffff;
+  --hf-surface: #f8fafc;
+  --hf-border: #e2e8f0;
+  --hf-text-primary: #0f172a;
+  --hf-text-secondary: #6b7280;
+  --hf-text-muted: #94a3b8;
+
+  /* Status Colors */
+  --hf-success: #22c55e;
+  --hf-error: #ef4444;
+  --hf-warning: #f59e0b;
+  --hf-info: #3b82f6;
+
+  /* Spacing Scale */
+  --hf-space-xs: 0.25rem;
+  --hf-space-sm: 0.5rem;
+  --hf-space-md: 1rem;
+  --hf-space-lg: 1.5rem;
+  --hf-space-xl: 2rem;
+  --hf-space-2xl: 3rem;
+  --hf-space-3xl: 4rem;
+
+  /* Typography */
+  --hf-font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, sans-serif;
+  --hf-font-mono: "JetBrains Mono", "Fira Code", Monaco, Consolas, monospace;
+
+  /* Font Sizes */
+  --hf-text-xs: 0.75rem;
+  --hf-text-sm: 0.875rem;
+  --hf-text-base: 1rem;
+  --hf-text-lg: 1.125rem;
+  --hf-text-xl: 1.25rem;
+  --hf-text-2xl: 1.5rem;
+  --hf-text-3xl: 1.875rem;
+  --hf-text-4xl: 2.25rem;
+
+  /* Border Radius */
+  --hf-radius-sm: 0.375rem;
+  --hf-radius-md: 0.5rem;
+  --hf-radius-lg: 0.75rem;
+  --hf-radius-xl: 1rem;
+
+  /* Shadows */
+  --hf-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --hf-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --hf-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --hf-shadow-hf: 0 4px 12px rgba(255, 157, 0, 0.15);
+  --hf-shadow-hf-lg: 0 8px 24px rgba(255, 157, 0, 0.2);
+
+  /* Transitions */
+  --hf-transition-fast: 150ms ease-in-out;
+  --hf-transition-normal: 200ms ease-in-out;
+  --hf-transition-slow: 300ms ease-in-out;
+}
+
+/* Dark mode variables */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --hf-background: #0f172a;
+    --hf-surface: #f8fafc; /* Changed to light surface for better visibility */
+    --hf-border: #334155;
+    --hf-text-primary: #f8fafc;
+    --hf-text-secondary: #cbd5e1;
+    --hf-text-muted: #94a3b8;
+  }
+}
+
+/* HF Component Base Styles */
+
+/* Typography Classes */
+.hf-heading {
+  font-family: var(--hf-font-family);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--hf-text-primary);
+}
+
+.hf-heading-1 {
+  font-size: var(--hf-text-4xl);
+}
+
+.hf-heading-2 {
+  font-size: var(--hf-text-3xl);
+}
+
+.hf-heading-3 {
+  font-size: var(--hf-text-2xl);
+}
+
+.hf-heading-4 {
+  font-size: var(--hf-text-xl);
+}
+
+.hf-body {
+  font-family: var(--hf-font-family);
+  font-size: var(--hf-text-base);
+  line-height: 1.6;
+  color: var(--hf-text-primary);
+}
+
+.hf-body-sm {
+  font-size: var(--hf-text-sm);
+}
+
+.hf-body-lg {
+  font-size: var(--hf-text-lg);
+}
+
+.hf-caption {
+  font-family: var(--hf-font-family);
+  font-size: var(--hf-text-sm);
+  color: var(--hf-text-secondary);
+}
+
+.hf-code {
+  font-family: var(--hf-font-mono);
+  font-size: var(--hf-text-sm);
+  background-color: var(--hf-surface);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--hf-radius-sm);
+  border: 1px solid var(--hf-border);
+}
+
+/* Enhanced text visibility and contrast */
+.hf-text-primary {
+  color: #111827 !important;
+}
+
+.hf-text-secondary {
+  color: #374151 !important;
+}
+
+.hf-text-muted {
+  color: #6b7280 !important;
+}
+
+/* Button Components */
+.hf-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--hf-space-sm);
+  padding: var(--hf-space-sm) var(--hf-space-md);
+  font-family: var(--hf-font-family);
+  font-size: var(--hf-text-sm);
+  font-weight: 500;
+  line-height: 1;
+  border: none;
+  border-radius: var(--hf-radius-lg);
+  cursor: pointer;
+  transition: all var(--hf-transition-normal);
+  text-decoration: none;
+  outline: none;
+  user-select: none;
+}
+
+.hf-btn:focus-visible {
+  outline: 2px solid var(--hf-orange-primary);
+  outline-offset: 2px;
+}
+
+.hf-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Button Variants */
+.hf-btn-primary {
+  background: linear-gradient(
+    135deg,
+    var(--hf-yellow-primary) 0%,
+    var(--hf-orange-primary) 100%
+  );
+  color: white;
+  box-shadow: var(--hf-shadow-hf);
+}
+
+.hf-btn-primary:hover:not(:disabled) {
+  box-shadow: var(--hf-shadow-hf-lg);
+  transform: translateY(-1px);
+}
+
+.hf-btn-secondary {
+  background-color: var(--hf-surface);
+  color: var(--hf-text-primary);
+  border: 1px solid var(--hf-border);
+}
+
+.hf-btn-secondary:hover:not(:disabled) {
+  background-color: var(--hf-100);
+  border-color: var(--hf-300);
+}
+
+.hf-btn-outline {
+  background-color: transparent;
+  color: var(--hf-orange-primary);
+  border: 2px solid var(--hf-orange-primary);
+}
+
+.hf-btn-outline:hover:not(:disabled) {
+  background-color: var(--hf-orange-primary);
+  color: white;
+}
+
+.hf-btn-ghost {
+  background-color: transparent;
+  color: var(--hf-orange-primary);
+}
+
+.hf-btn-ghost:hover:not(:disabled) {
+  background-color: var(--hf-100);
+}
+
+/* Button Sizes */
+.hf-btn-sm {
+  padding: var(--hf-space-xs) var(--hf-space-sm);
+  font-size: var(--hf-text-xs);
+}
+
+.hf-btn-lg {
+  padding: var(--hf-space-md) var(--hf-space-lg);
+  font-size: var(--hf-text-base);
+}
+
+/* Card Components */
+.hf-card {
+  background-color: var(--hf-background);
+  border: 1px solid var(--hf-border);
+  border-radius: var(--hf-radius-xl);
+  box-shadow: var(--hf-shadow-sm);
+  padding: var(--hf-space-lg);
+  transition: all var(--hf-transition-slow);
+}
+
+.hf-card:hover {
+  box-shadow: var(--hf-shadow-lg);
+}
+
+.hf-card-interactive {
+  cursor: pointer;
+}
+
+.hf-card-interactive:hover {
+  border-color: var(--hf-300);
+  box-shadow: var(--hf-shadow-hf);
+  transform: translateY(-2px);
+}
+
+/* Card content text improvements */
+.card-hf .ant-card-body {
+  color: #1f2937;
+}
+
+/* Form Components */
+.hf-input {
+  width: 100%;
+  padding: var(--hf-space-sm) var(--hf-space-md);
+  font-family: var(--hf-font-family);
+  font-size: var(--hf-text-base);
+  background-color: var(--hf-background);
+  border: 1px solid var(--hf-border);
+  border-radius: var(--hf-radius-lg);
+  outline: none;
+  transition: all var(--hf-transition-normal);
+}
+
+.hf-input:focus {
+  border-color: var(--hf-orange-primary);
+  box-shadow: 0 0 0 3px rgba(255, 157, 0, 0.1);
+}
+
+.hf-input:invalid {
+  border-color: var(--hf-error);
+}
+
+.hf-label {
+  display: block;
+  font-family: var(--hf-font-family);
+  font-size: var(--hf-text-sm);
+  font-weight: 500;
+  color: var(--hf-text-primary);
+  margin-bottom: var(--hf-space-xs);
+}
+
+.hf-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Badge Components */
+.hf-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--hf-space-xs);
+  padding: var(--hf-space-xs) var(--hf-space-sm);
+  font-family: var(--hf-font-family);
+  font-size: var(--hf-text-xs);
+  font-weight: 500;
+  border-radius: var(--hf-radius-md);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.hf-badge-primary {
+  background-color: var(--hf-100);
+  color: var(--hf-800);
+}
+
+.hf-badge-success {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.hf-badge-error {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.hf-badge-warning {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.hf-badge-info {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+/* Badge text improvements */
+.badge-hf-default {
+  color: #1f2937 !important;
+  background-color: #f3f4f6;
+}
+
+.badge-hf-gradient {
+  color: white !important;
+  font-weight: 600;
+}
+
+/* Navigation Components */
+.hf-nav {
+  background-color: var(--hf-background);
+  border-bottom: 1px solid var(--hf-border);
+  padding: var(--hf-space-md) 0;
+}
+
+.hf-nav-item {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--hf-space-sm) var(--hf-space-md);
+  font-family: var(--hf-font-family);
+  font-size: var(--hf-text-sm);
+  font-weight: 500;
+  color: var(--hf-text-secondary);
+  text-decoration: none;
+  border-radius: var(--hf-radius-md);
+  transition: all var(--hf-transition-normal);
+}
+
+.hf-nav-item:hover {
+  color: var(--hf-orange-primary);
+  background-color: var(--hf-100);
+}
+
+.hf-nav-item-active {
+  color: var(--hf-orange-primary);
+  background-color: var(--hf-100);
+}
+
+/* Loading Components */
+.hf-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--hf-border);
+  border-radius: 50%;
+  border-top-color: var(--hf-orange-primary);
+  animation: hf-spin 1s ease-in-out infinite;
+}
+
+@keyframes hf-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Utility Classes */
+.hf-gradient-text {
+  background: linear-gradient(
+    135deg,
+    var(--hf-yellow-primary) 0%,
+    var(--hf-orange-primary) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.hf-gradient-bg {
+  background: linear-gradient(
+    135deg,
+    var(--hf-yellow-primary) 0%,
+    var(--hf-orange-primary) 100%
+  );
+}
+
+.hf-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--hf-space-md);
+}
+
+.hf-section {
+  padding: var(--hf-space-3xl) 0;
+}
+
+.hf-divider {
+  height: 1px;
+  background-color: var(--hf-border);
+  border: none;
+  margin: var(--hf-space-lg) 0;
+}
+
+/* Animation Classes */
+.hf-fade-in {
+  animation: hf-fade-in 0.5s ease-in-out;
+}
+
+.hf-slide-up {
+  animation: hf-slide-up 0.3s ease-out;
+}
+
+@keyframes hf-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes hf-slide-up {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive Utilities */
+@media (max-width: 768px) {
+  .hf-container {
+    padding: 0 var(--hf-space-sm);
+  }
+
+  .hf-heading-1 {
+    font-size: var(--hf-text-3xl);
+  }
+
+  .hf-heading-2 {
+    font-size: var(--hf-text-2xl);
+  }
+
+  .hf-section {
+    padding: var(--hf-space-2xl) 0;
+  }
+}
+
+/* Typography improvements */
+.hf-heading {
+  color: #111827 !important;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.hf-body-text {
+  color: #374151 !important;
+  line-height: 1.6;
+}
+
+/* Button text improvements */
+.btn-hf-primary {
+  color: white !important;
+  font-weight: 600;
+}
+
+.btn-hf-secondary {
+  color: #1f2937 !important;
+  font-weight: 500;
+}
+
+.btn-hf-outline {
+  color: #ea580c !important;
+  font-weight: 500;
+}

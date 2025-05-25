@@ -17,6 +17,11 @@ const TaskDetailPage = lazy(() => import("../pages/TaskDetailPage"));
 const TaskBoardPage = lazy(() => import("../pages/TaskBoardPage"));
 const ProfilePage = lazy(() => import("../pages/ProfilePage"));
 const NotFoundPage = lazy(() => import("../pages/NotFoundPage"));
+const HFDesignSystemShowcase = lazy(
+  () => import("../pages/HFDesignSystemShowcase")
+);
+const HFTestPage = lazy(() => import("../pages/HFTestPage"));
+const HFAntdTestPage = lazy(() => import("../pages/HFAntdTestPage"));
 
 // Loading component for Suspense
 const PageLoader = () => (
@@ -78,6 +83,22 @@ export const router = createBrowserRouter([
         ),
       },
       {
+        path: "hf-showcase",
+        element: (
+          <LazyWrapper>
+            <HFDesignSystemShowcase />
+          </LazyWrapper>
+        ),
+      },
+      {
+        path: "hf-antd-test",
+        element: (
+          <LazyWrapper>
+            <HFAntdTestPage />
+          </LazyWrapper>
+        ),
+      },
+      {
         path: "projects",
         element: (
           <LazyWrapper>
@@ -122,6 +143,14 @@ export const router = createBrowserRouter([
         element: (
           <LazyWrapper>
             <ProfilePage />
+          </LazyWrapper>
+        ),
+      },
+      {
+        path: "hf-test",
+        element: (
+          <LazyWrapper>
+            <HFTestPage />
           </LazyWrapper>
         ),
       },

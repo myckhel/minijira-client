@@ -68,12 +68,15 @@ export function Sidebar({ collapsed }: SidebarProps) {
       {/* Logo/Brand */}
       <div className="p-4 border-b border-gray-200">
         <div className="flex items-center">
-          <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 hf-bg-gradient rounded-lg flex items-center justify-center shadow-md">
             <CheckSquareOutlined className="text-white text-lg" />
           </div>
           {!collapsed && (
             <div className="ml-3">
-              <h1 className="text-lg font-bold text-gray-900">Mini Jira</h1>
+              <h1 className="text-lg font-bold hf-text-gradient">Mini Jira</h1>
+              <p className="text-xs text-orange-600 font-medium">
+                HF Design System
+              </p>
             </div>
           )}
         </div>

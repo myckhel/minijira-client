@@ -3,26 +3,10 @@ import { RouterProvider } from "react-router-dom";
 import { ConfigProvider } from "antd";
 import { router } from "./routes";
 import { useAuthStore } from "./stores/authStore";
+import { hfAntdTheme } from "./themes/hf-antd-theme";
 
-// Ant Design theme configuration
-const theme = {
-  token: {
-    colorPrimary: "#1890ff",
-    borderRadius: 6,
-    fontFamily: "Inter, system-ui, Avenir, Helvetica, Arial, sans-serif",
-  },
-  components: {
-    Layout: {
-      siderBg: "#ffffff",
-      headerBg: "#ffffff",
-    },
-    Menu: {
-      itemBg: "transparent",
-      itemSelectedBg: "#e6f4ff",
-      itemHoverBg: "#f5f5f5",
-    },
-  },
-};
+// Use the comprehensive HF theme configuration
+const theme = hfAntdTheme;
 
 function App() {
   const { checkAuthStatus } = useAuthStore();
