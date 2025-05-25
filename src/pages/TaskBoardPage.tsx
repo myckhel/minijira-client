@@ -4,6 +4,8 @@ import { Typography, Select, Button, Space, Card } from "antd";
 import { PlusOutlined, AppstoreOutlined } from "@ant-design/icons";
 import { useProjectStore } from "../stores/projectStore";
 import KanbanBoard from "../components/features/tasks/KanbanBoard";
+import TaskModal from "../components/features/tasks/TaskModal";
+import type { Task } from "../types";
 
 const { Title } = Typography;
 const { Option } = Select;
@@ -14,11 +16,21 @@ export default function TaskBoardPage() {
   const [selectedProjectId, setSelectedProjectId] = useState<
     string | undefined
   >(searchParams.get("projectId") || undefined);
+  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
 
   // Fetch projects on mount
   useEffect(() => {
     fetchProjects();
   }, [fetchProjects]);
+
+  // Auto-select first project if none selected and projects exist
+  useEffect(() => {
+    if (!selectedProjectId && projects.length > 0) {
+      const firstProjectId = projects[0].id;
+      setSelectedProjectId(firstProjectId);
+      setSearchParams({ projectId: firstProjectId });
+    }
+  }, [projects, selectedProjectId, setSearchParams]);
 
   // Update URL when project selection changes
   const handleProjectChange = (projectId: string | undefined) => {
@@ -31,8 +43,16 @@ export default function TaskBoardPage() {
   };
 
   const handleCreateTask = () => {
-    // TODO: Implement task creation modal
-    console.log("Create task for project:", selectedProjectId);
+    setIsTaskModalOpen(true);
+  };
+
+  const handleTaskModalClose = () => {
+    setIsTaskModalOpen(false);
+  };
+
+  const handleTaskSuccess = (task: Task) => {
+    // Task creation successful, modal will close automatically
+    console.log("Task created successfully:", task);
   };
 
   const selectedProject = projects.find((p) => p.id === selectedProjectId);
@@ -64,34 +84,44 @@ export default function TaskBoardPage() {
         </div>
 
         {/* Project Filter */}
-        <div className="mt-4 flex flex-col sm:flex-row sm:items-center gap-4">
-          <div className="flex items-center space-x-2">
-            <span className="text-sm font-medium text-gray-700">Project:</span>
-            <Select
-              style={{ width: 300 }}
-              placeholder="Select a project"
-              value={selectedProjectId}
-              onChange={handleProjectChange}
-              allowClear
-            >
-              {projects.map((project) => (
-                <Option key={project.id} value={project.id}>
-                  <div className="flex items-center space-x-2">
-                    <div
-                      className="w-3 h-3 rounded-full"
-                      style={{ backgroundColor: project.color || "#6366f1" }}
-                    />
-                    <span>{project.name}</span>
-                  </div>
-                </Option>
-              ))}
-            </Select>
+        <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+            <div className="flex items-center space-x-2">
+              <span className="text-sm font-medium text-gray-700">
+                Project:
+              </span>
+              <Select
+                style={{ width: 300 }}
+                placeholder="Select a project"
+                value={selectedProjectId}
+                onChange={handleProjectChange}
+                allowClear
+              >
+                {projects.map((project) => (
+                  <Option key={project.id} value={project.id}>
+                    <div className="flex items-center space-x-2">
+                      <div
+                        className="w-3 h-3 rounded-full"
+                        style={{ backgroundColor: project.color || "#6366f1" }}
+                      />
+                      <span>{project.name}</span>
+                    </div>
+                  </Option>
+                ))}
+              </Select>
+            </div>
           </div>
 
           {selectedProject && (
-            <div className="flex items-center space-x-2 text-sm text-gray-600">
-              <span>•</span>
-              <span>{selectedProject._count?.tasks || 0} tasks</span>
+            <div className="flex items-center space-x-4 text-sm text-gray-600">
+              <div className="flex items-center space-x-2">
+                <span>•</span>
+                <span>{selectedProject._count?.tasks || 0} tasks</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <span>•</span>
+                <span>Owner: {selectedProject.owner?.name}</span>
+              </div>
             </div>
           )}
         </div>
@@ -121,6 +151,14 @@ export default function TaskBoardPage() {
           </div>
         )}
       </div>
+
+      {/* Task Creation Modal */}
+      <TaskModal
+        open={isTaskModalOpen}
+        onClose={handleTaskModalClose}
+        onSuccess={handleTaskSuccess}
+        projectId={selectedProjectId}
+      />
     </div>
   );
 }

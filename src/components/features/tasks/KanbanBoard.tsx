@@ -236,16 +236,22 @@ function KanbanBoard({ projectId }: KanbanBoardProps) {
   }
 
   return (
-    <div className="h-full p-6">
+    <div className="h-full p-2 sm:p-4 lg:p-6">
       <DndContext
         sensors={sensors}
         collisionDetection={closestCorners}
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
       >
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 h-full">
+        {/* Responsive Layout: Always horizontal with enhanced gaps and shadows */}
+        <div className="flex gap-4 sm:gap-6 lg:gap-8 h-full overflow-hidden">
           {columns.map((column) => (
-            <BoardColumn key={column.id} column={column} />
+            <div
+              key={column.id}
+              className="flex-1 min-w-0 w-full max-w-[calc(100vw/3-1rem)] sm:max-w-none"
+            >
+              <BoardColumn column={column} />
+            </div>
           ))}
         </div>
 
