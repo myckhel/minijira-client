@@ -74,9 +74,6 @@ export function Sidebar({ collapsed }: SidebarProps) {
           {!collapsed && (
             <div className="ml-3">
               <h1 className="text-lg font-bold hf-text-gradient">Mini Jira</h1>
-              <p className="text-xs text-orange-600 font-medium">
-                HF Design System
-              </p>
             </div>
           )}
         </div>

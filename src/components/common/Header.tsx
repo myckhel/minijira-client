@@ -1,4 +1,4 @@
-import { Button, Dropdown, Avatar, Space, Typography, Badge } from "antd";
+import { Button, Dropdown, Avatar, Space, Badge, Tooltip } from "antd";
 import {
   BellOutlined,
   UserOutlined,
@@ -8,10 +8,9 @@ import {
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../stores/authStore";
+import { useUiStore } from "../../stores/uiStore";
 import { formatUserName, getUserInitials } from "../../utils/auth";
 import type { MenuProps } from "antd";
-
-const { Text } = Typography;
 
 interface HeaderProps {
   style?: React.CSSProperties;
@@ -20,6 +19,7 @@ interface HeaderProps {
 export function Header({ style }: HeaderProps) {
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
+  const { toggleSidebar } = useUiStore();
 
   const handleLogout = () => {
     logout();
@@ -57,15 +57,14 @@ export function Header({ style }: HeaderProps) {
     >
       {/* Left side - could add breadcrumbs or page title here */}
       <div className="flex items-center">
-        <Button
-          type="text"
-          icon={<MenuOutlined />}
-          className="lg:hidden mr-2"
-          // onClick={() => setMobileDrawerOpen(true)} // Would need mobile drawer state
-        />
-        <Text className="text-lg font-medium text-gray-800 hidden sm:block">
-          Dashboard
-        </Text>
+        <Tooltip title="Toggle sidebar">
+          <Button
+            type="text"
+            icon={<MenuOutlined />}
+            className="mr-2"
+            onClick={toggleSidebar}
+          />
+        </Tooltip>
       </div>
 
       {/* Right side - notifications and user menu */}
