@@ -191,9 +191,9 @@ function DraggableTask({ task, isDragging = false }: DraggableTaskProps) {
         before:absolute before:inset-0 before:bg-gradient-to-br before:from-transparent before:via-transparent before:to-gray-50/20 before:opacity-0 before:transition-opacity before:duration-300 group-hover:before:opacity-100
         relative
       `}
-      bodyStyle={{ padding: "20px", height: "100%", borderRadius: "12px" }}
+      bodyStyle={{ padding: "16px", height: "100%", borderRadius: "12px" }}
     >
-      <div className="space-y-3 h-full flex flex-col">
+      <div className="space-y-2 sm:space-y-3 h-full flex flex-col">
         {/* Header: Priority and Status Indicator */}
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
@@ -243,8 +243,8 @@ function DraggableTask({ task, isDragging = false }: DraggableTaskProps) {
                   style={{ backgroundColor: task.project?.color || "#6366f1" }}
                 />
                 <Text
-                  className="text-xs text-gray-600 font-medium truncate"
-                  style={{ maxWidth: "120px" }}
+                  className="text-xs sm:text-xs text-gray-600 font-medium truncate"
+                  style={{ maxWidth: "100px" }}
                 >
                   {task.project?.name || "No Project"}
                 </Text>
@@ -256,7 +256,7 @@ function DraggableTask({ task, isDragging = false }: DraggableTaskProps) {
               {task.assignee ? (
                 <Tooltip title={task.assignee.name}>
                   <Avatar
-                    size={26}
+                    size={24}
                     src={task.assignee.avatarUrl}
                     icon={<UserOutlined />}
                     className="border-2 border-white shadow-md transition-all duration-200 hover:scale-105"
@@ -273,7 +273,7 @@ function DraggableTask({ task, isDragging = false }: DraggableTaskProps) {
               ) : (
                 <Tooltip title="Unassigned">
                   <Avatar
-                    size={26}
+                    size={24}
                     icon={<UserOutlined />}
                     className="bg-gray-400 border-2 border-white shadow-md"
                   />

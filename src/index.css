@@ -46,6 +46,14 @@ body {
   height: 6px;
 }
 
+/* Mobile-friendly scrollbar */
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+}
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
@@ -57,6 +65,16 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--hf-secondary);
+}
+
+/* Touch-friendly scrolling for mobile devices */
+@media (hover: none) and (pointer: coarse) {
+  .overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+  }
 }
 
 /* Override Ant Design styles with HF design patterns */

@@ -51,21 +51,21 @@ function BoardColumn({ column }: BoardColumnProps) {
         headStyle={{
           background: `linear-gradient(135deg, ${column.color}08 0%, ${column.color}15 50%, #fafafa 100%)`,
           borderBottom: `3px solid ${column.color}30`,
-          padding: "16px 20px",
+          padding: "12px 16px sm:16px sm:20px",
           borderRadius: "12px 12px 0 0",
           position: "relative",
           overflow: "hidden",
         }}
         title={
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2 sm:space-x-3">
               <div
-                className="w-5 h-5 rounded-full ring-2 ring-white shadow-lg flex items-center justify-center"
+                className="w-4 h-4 sm:w-5 sm:h-5 rounded-full ring-2 ring-white shadow-lg flex items-center justify-center"
                 style={{ backgroundColor: column.color }}
               >
-                <div className="w-2 h-2 bg-white rounded-full opacity-80" />
+                <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-white rounded-full opacity-80" />
               </div>
-              <span className="font-bold text-sm sm:text-base text-gray-800 tracking-wide">
+              <span className="font-bold text-sm lg:text-base text-gray-800 tracking-wide">
                 {column.title}
               </span>
               <Badge
@@ -74,6 +74,7 @@ function BoardColumn({ column }: BoardColumnProps) {
                   backgroundColor: column.color,
                   boxShadow: "0 4px 8px rgba(0,0,0,0.15)",
                   fontWeight: "600",
+                  fontSize: "10px",
                 }}
                 className="text-xs font-bold"
               />
@@ -83,17 +84,17 @@ function BoardColumn({ column }: BoardColumnProps) {
               size="small"
               icon={<PlusOutlined />}
               onClick={handleAddTask}
-              className="text-gray-500 hover:text-white hover:bg-blue-500 hover:border-blue-500 transition-all duration-300 border border-gray-300 rounded-lg shadow-sm hover:shadow-lg hover:scale-110 active:scale-95"
+              className="text-gray-500 hover:text-white hover:bg-blue-500 hover:border-blue-500 transition-all duration-300 border border-gray-300 rounded-lg shadow-sm hover:shadow-lg hover:scale-110 active:scale-95 min-w-[32px] h-8 sm:min-w-[36px] sm:h-9"
             />
           </div>
         }
       >
-        <div className="p-3 sm:p-4 h-full overflow-y-auto bg-gradient-to-b from-gray-50/30 to-gray-50/80 backdrop-blur-sm">
+        <div className="p-2 sm:p-3 lg:p-4 h-full overflow-y-auto bg-gradient-to-b from-gray-50/30 to-gray-50/80 backdrop-blur-sm">
           <SortableContext
             items={column.tasks.map((task) => task.id)}
             strategy={verticalListSortingStrategy}
           >
-            <div className="space-y-3 xl:space-y-4 min-h-[200px] xl:min-h-[250px]">
+            <div className="space-y-2 sm:space-y-3 xl:space-y-4 min-h-[200px] xl:min-h-[250px]">
               {column.tasks.length > 0 ? (
                 column.tasks.map((task) => (
                   <DraggableTask key={task.id} task={task} />
@@ -101,7 +102,7 @@ function BoardColumn({ column }: BoardColumnProps) {
               ) : (
                 <div
                   className={`
-                    border-2 border-dashed rounded-2xl p-8 xl:p-10 text-center 
+                    border-2 border-dashed rounded-2xl p-6 sm:p-8 xl:p-10 text-center 
                     transition-all duration-300 ease-out relative overflow-hidden
                     ${
                       isOver
@@ -115,7 +116,7 @@ function BoardColumn({ column }: BoardColumnProps) {
                     image={Empty.PRESENTED_IMAGE_SIMPLE}
                     description={
                       <span
-                        className={`font-medium text-sm xl:text-base transition-colors duration-200 ${
+                        className={`font-medium text-xs sm:text-sm xl:text-base transition-colors duration-200 ${
                           isOver ? "text-blue-600" : "text-gray-500"
                         }`}
                       >

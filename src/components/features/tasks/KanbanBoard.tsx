@@ -35,7 +35,7 @@ function KanbanBoard({ projectId }: KanbanBoardProps) {
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 8,
+        distance: 10, // Increased for better mobile touch experience
       },
     })
   );
@@ -243,12 +243,25 @@ function KanbanBoard({ projectId }: KanbanBoardProps) {
         onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
       >
-        {/* Responsive Layout: Always horizontal with enhanced gaps and shadows */}
-        <div className="flex gap-4 sm:gap-6 lg:gap-8 h-full overflow-hidden">
+        {/* Mobile hint for horizontal scrolling */}
+        <div className="md:hidden mb-2 text-center">
+          <div className="text-xs text-gray-500 bg-gray-50 rounded-lg px-3 py-2 inline-flex items-center space-x-2">
+            <span>👈</span>
+            <span>Swipe to see more columns</span>
+            <span>👉</span>
+          </div>
+        </div>
+
+        {/* Responsive Layout: Horizontal scroll on mobile, flex on larger screens */}
+        <div className="flex gap-3 sm:gap-4 lg:gap-6 h-full overflow-x-auto overflow-y-hidden pb-2">
           {columns.map((column) => (
             <div
               key={column.id}
-              className="flex-1 min-w-0 w-full max-w-[calc(100vw/3-1rem)] sm:max-w-none"
+              className={`
+                flex-shrink-0 h-full
+                w-[280px] sm:w-[320px] md:flex-1 md:w-auto md:min-w-0
+                max-w-[85vw] sm:max-w-none
+              `}
             >
               <BoardColumn column={column} />
             </div>
