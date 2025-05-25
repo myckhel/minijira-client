@@ -44,6 +44,7 @@ export const ROUTES = {
   PROJECTS: "/projects",
   PROJECT_DETAIL: "/projects/:id",
   TASKS: "/tasks",
+  TASK_DETAIL: "/tasks/:id",
   TASK_BOARD: "/board",
   PROFILE: "/profile",
   USERS: "/users",

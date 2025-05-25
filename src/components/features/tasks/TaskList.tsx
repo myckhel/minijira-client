@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Table,
   Tag,
@@ -21,6 +22,7 @@ import {
   FlagOutlined,
   ClockCircleOutlined,
   MoreOutlined,
+  EyeOutlined,
 } from "@ant-design/icons";
 import { useTaskStore } from "../../../stores/taskStore";
 import { useProjectStore } from "../../../stores/projectStore";
@@ -37,6 +39,7 @@ interface TaskListProps {
 }
 
 function TaskList({ projectId, onEditTask }: TaskListProps) {
+  const navigate = useNavigate();
   const { tasks, isLoading, deleteTask, setFilters, filters } = useTaskStore();
   const { projects } = useProjectStore();
   const [searchQuery, setSearchQuery] = useState("");
@@ -82,6 +85,10 @@ function TaskList({ projectId, onEditTask }: TaskListProps) {
     }
   };
 
+  const handleViewTask = (taskId: string) => {
+    navigate(`/tasks/${taskId}`);
+  };
+
   const getStatusColor = (status: TaskStatus) => {
     switch (status) {
       case "TODO":
@@ -116,7 +123,12 @@ function TaskList({ projectId, onEditTask }: TaskListProps) {
       width: "25%",
       render: (title: string, record: Task) => (
         <div>
-          <div className="font-medium text-gray-900 mb-1">{title}</div>
+          <div
+            className="font-medium text-gray-900 mb-1 cursor-pointer hover:text-blue-600 hover:underline transition-colors"
+            onClick={() => handleViewTask(record.id)}
+          >
+            {title}
+          </div>
           {record.description && (
             <Text type="secondary" className="text-sm">
               {record.description.slice(0, 100)}...
@@ -247,6 +259,12 @@ function TaskList({ projectId, onEditTask }: TaskListProps) {
         <Dropdown
           menu={{
             items: [
+              {
+                key: "view",
+                label: "View Details",
+                icon: <EyeOutlined />,
+                onClick: () => handleViewTask(record.id),
+              },
               {
                 key: "edit",
                 label: "Edit Task",

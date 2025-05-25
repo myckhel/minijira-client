@@ -17,6 +17,7 @@ import {
   EditOutlined,
   FolderOutlined,
   PlusOutlined,
+  EyeOutlined,
 } from "@ant-design/icons";
 import { useProjectStore } from "../stores/projectStore";
 import { useAuthStore } from "../stores/authStore";
@@ -70,6 +71,10 @@ export default function ProjectDetailPage() {
   const handleCreateTask = () => {
     // Navigate to tasks page with this project pre-selected
     navigate(`${ROUTES.TASKS}?projectId=${selectedProject?.id}`);
+  };
+
+  const handleViewTask = (taskId: string) => {
+    navigate(`/tasks/${taskId}`);
   };
 
   if (error) {
@@ -201,7 +206,8 @@ export default function ProjectDetailPage() {
             {selectedProject.tasks.slice(0, 5).map((task) => (
               <div
                 key={task.id}
-                className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50"
+                className="flex items-center justify-between p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors group"
+                onClick={() => handleViewTask(task.id)}
               >
                 <div className="flex items-center space-x-3">
                   <Tag
@@ -215,7 +221,12 @@ export default function ProjectDetailPage() {
                   >
                     {task.status.replace("_", " ")}
                   </Tag>
-                  <Text strong>{task.title}</Text>
+                  <Text
+                    strong
+                    className="group-hover:text-blue-600 transition-colors"
+                  >
+                    {task.title}
+                  </Text>
                   {task.assignee && (
                     <div className="flex items-center space-x-1">
                       <Avatar size="small" src={task.assignee.avatarUrl}>
@@ -227,9 +238,12 @@ export default function ProjectDetailPage() {
                     </div>
                   )}
                 </div>
-                <Text type="secondary" className="text-xs">
-                  {new Date(task.createdAt).toLocaleDateString()}
-                </Text>
+                <div className="flex items-center space-x-2">
+                  <Text type="secondary" className="text-xs">
+                    {new Date(task.createdAt).toLocaleDateString()}
+                  </Text>
+                  <EyeOutlined className="text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </div>
               </div>
             ))}
 

@@ -2,6 +2,8 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Card, Avatar, Typography, Tooltip, Tag } from "antd";
 import { ClockCircleOutlined, UserOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
 import type { Task } from "../../../types";
 
 const { Text, Paragraph } = Typography;
@@ -12,6 +14,7 @@ interface DraggableTaskProps {
 }
 
 function DraggableTask({ task, isDragging = false }: DraggableTaskProps) {
+  const navigate = useNavigate();
   const {
     attributes,
     listeners,
@@ -23,11 +26,47 @@ function DraggableTask({ task, isDragging = false }: DraggableTaskProps) {
     id: task.id,
   });
 
+  // Track mouse events to distinguish clicks from drags
+  const mouseDownPos = useRef<{ x: number; y: number } | null>(null);
+  const isDragStarted = useRef(false);
+
   const style = {
     transform: CSS.Transform.toString(transform),
     transition: transition || "all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94)",
     opacity: isDragging || isSortableDragging ? 0.7 : 1,
     zIndex: isDragging || isSortableDragging ? 1000 : "auto",
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    mouseDownPos.current = { x: e.clientX, y: e.clientY };
+    isDragStarted.current = false;
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (mouseDownPos.current) {
+      const deltaX = Math.abs(e.clientX - mouseDownPos.current.x);
+      const deltaY = Math.abs(e.clientY - mouseDownPos.current.y);
+      // If mouse moved more than 5px, consider it a drag
+      if (deltaX > 5 || deltaY > 5) {
+        isDragStarted.current = true;
+      }
+    }
+  };
+
+  const handleMouseUp = (e: React.MouseEvent) => {
+    // Only navigate if it wasn't a drag and not currently in drag state
+    if (
+      !isDragStarted.current &&
+      !isDragging &&
+      !isSortableDragging &&
+      mouseDownPos.current
+    ) {
+      e.preventDefault();
+      e.stopPropagation();
+      navigate(`/tasks/${task.id}`);
+    }
+    mouseDownPos.current = null;
+    isDragStarted.current = false;
   };
 
   const getPriorityLabel = (priority: string) => {
@@ -133,8 +172,11 @@ function DraggableTask({ task, isDragging = false }: DraggableTaskProps) {
       {...attributes}
       {...listeners}
       size="small"
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
       className={`
-        group cursor-grab active:cursor-grabbing
+        group cursor-grab active:cursor-grabbing hover:cursor-pointer
         transition-all duration-300 ease-out
         border border-gray-200
         hover:border-blue-300 hover:shadow-lg hover:shadow-blue-100/50
