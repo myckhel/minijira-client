@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../stores/authStore";
 import { useUiStore } from "../../stores/uiStore";
 import { formatUserName, getUserInitials } from "../../utils/auth";
+import { useIsMobile } from "../../hooks/useMediaQuery";
 import type { MenuProps } from "antd";
 
 interface HeaderProps {
@@ -20,6 +21,7 @@ export function Header({ style }: HeaderProps) {
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
   const { toggleSidebar } = useUiStore();
+  const isMobile = useIsMobile();
 
   const handleLogout = () => {
     logout();
@@ -53,7 +55,7 @@ export function Header({ style }: HeaderProps) {
   return (
     <div
       style={style}
-      className="bg-white border-b border-gray-200 px-6 flex items-center justify-between shadow-sm"
+      className="bg-white border-b border-gray-200 px-4 md:px-6 flex items-center justify-between shadow-sm"
     >
       {/* Left side - could add breadcrumbs or page title here */}
       <div className="flex items-center">
@@ -61,8 +63,12 @@ export function Header({ style }: HeaderProps) {
           <Button
             type="text"
             icon={<MenuOutlined />}
-            className="mr-2"
+            className={`menu-toggle-btn mr-2 ${
+              isMobile ? "h-11 w-11 text-lg" : ""
+            }`}
+            size={isMobile ? "large" : "middle"}
             onClick={toggleSidebar}
+            aria-label="Toggle sidebar menu"
           />
         </Tooltip>
       </div>

@@ -16,17 +16,29 @@ export function AppLayout() {
 
   // Handle responsive behavior
   useEffect(() => {
-    if (isMobile && !sidebarCollapsed) {
+    if (isMobile) {
       setSidebarCollapsed(true);
     }
-  }, [isMobile, setSidebarCollapsed, sidebarCollapsed]);
+  }, [isMobile, setSidebarCollapsed]);
+
+  // Handle window resize to auto-close sidebar on mobile
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768 && !sidebarCollapsed) {
+        setSidebarCollapsed(true);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [sidebarCollapsed, setSidebarCollapsed]);
 
   return (
     <Layout className="min-h-screen">
       {/* Mobile overlay when sidebar is open */}
       {!sidebarCollapsed && isMobile && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-50"
+          className="mobile-overlay"
           onClick={() => setSidebarCollapsed(true)}
         />
       )}
@@ -41,9 +53,16 @@ export function AppLayout() {
           left: 0,
           top: 0,
           bottom: 0,
-          zIndex: 100,
+          zIndex: isMobile ? 300 : 100,
+          transform:
+            isMobile && sidebarCollapsed
+              ? "translateX(-100%)"
+              : "translateX(0)",
+          transition: "transform 0.2s ease-in-out",
         }}
-        className="bg-white border-r border-gray-200"
+        className={`bg-white border-r border-gray-200 ${
+          isMobile ? "mobile-sidebar" : ""
+        }`}
       >
         <Sidebar collapsed={sidebarCollapsed} />
       </Sider>
@@ -60,7 +79,7 @@ export function AppLayout() {
             top: 0,
             right: 0,
             left: isMobile ? 0 : sidebarCollapsed ? 80 : SIDEBAR_WIDTH,
-            zIndex: 99,
+            zIndex: 150,
             height: HEADER_HEIGHT,
             transition: "left 0.2s",
           }}

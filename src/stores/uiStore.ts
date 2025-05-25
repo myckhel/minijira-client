@@ -44,8 +44,9 @@ interface UiState {
 export const useUiStore = create<UiState>()(
   devtools(
     (set) => ({
-      // Initial state
-      sidebarCollapsed: false,
+      // Initial state - collapsed by default on mobile
+      sidebarCollapsed:
+        typeof window !== "undefined" ? window.innerWidth < 768 : false,
       taskModalOpen: false,
       projectModalOpen: false,
       pageLoading: false,

@@ -1,4 +1,4 @@
-import { Menu } from "antd";
+import { Menu, Button } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   DashboardOutlined,
@@ -7,8 +7,11 @@ import {
   AppstoreOutlined,
   UserOutlined,
   SettingOutlined,
+  CloseOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
+import { useUiStore } from "../../stores/uiStore";
+import { useIsMobile } from "../../hooks/useMediaQuery";
 
 interface SidebarProps {
   collapsed: boolean;
@@ -17,31 +20,41 @@ interface SidebarProps {
 export function Sidebar({ collapsed }: SidebarProps) {
   const navigate = useNavigate();
   const location = useLocation();
+  const isMobile = useIsMobile();
+  const { setSidebarCollapsed } = useUiStore();
+
+  const handleNavigation = (path: string) => {
+    navigate(path);
+    // Close sidebar on mobile after navigation
+    if (isMobile) {
+      setSidebarCollapsed(true);
+    }
+  };
 
   const menuItems: MenuProps["items"] = [
     {
       key: "/dashboard",
       icon: <DashboardOutlined />,
       label: "Dashboard",
-      onClick: () => navigate("/dashboard"),
+      onClick: () => handleNavigation("/dashboard"),
     },
     {
       key: "/board",
       icon: <AppstoreOutlined />,
       label: "Board",
-      onClick: () => navigate("/board"),
+      onClick: () => handleNavigation("/board"),
     },
     {
       key: "/projects",
       icon: <ProjectOutlined />,
       label: "Projects",
-      onClick: () => navigate("/projects"),
+      onClick: () => handleNavigation("/projects"),
     },
     {
       key: "/tasks",
       icon: <CheckSquareOutlined />,
       label: "Tasks",
-      onClick: () => navigate("/tasks"),
+      onClick: () => handleNavigation("/tasks"),
     },
     {
       type: "divider",
@@ -50,13 +63,13 @@ export function Sidebar({ collapsed }: SidebarProps) {
       key: "/profile",
       icon: <UserOutlined />,
       label: "Profile",
-      onClick: () => navigate("/profile"),
+      onClick: () => handleNavigation("/profile"),
     },
     {
       key: "/settings",
       icon: <SettingOutlined />,
       label: "Settings",
-      onClick: () => navigate("/settings"),
+      onClick: () => handleNavigation("/settings"),
     },
   ];
 
@@ -65,6 +78,18 @@ export function Sidebar({ collapsed }: SidebarProps) {
 
   return (
     <div className="h-full flex flex-col">
+      {/* Mobile Close Button */}
+      {isMobile && !collapsed && (
+        <div className="p-4 flex justify-end border-b border-gray-200">
+          <Button
+            type="text"
+            icon={<CloseOutlined />}
+            onClick={() => setSidebarCollapsed(true)}
+            className="flex items-center justify-center"
+          />
+        </div>
+      )}
+
       {/* Logo/Brand */}
       <div className="p-4 border-b border-gray-200">
         <div className="flex items-center">

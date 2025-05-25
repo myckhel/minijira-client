@@ -256,3 +256,90 @@ body {
     color: #334155 !important; /* Updated text color for better contrast */
   }
 }
+
+/* Mobile Sidebar Fixes */
+@media (max-width: 768px) {
+  /* Ensure menu button is visible and touchable on mobile */
+  .ant-btn[aria-label*="menu"] .anticon,
+  .ant-btn .anticon-menu {
+    font-size: 18px !important;
+    line-height: 1 !important;
+  }
+
+  /* Mobile header adjustments */
+  .ant-layout-header {
+    padding: 0 16px !important;
+  }
+
+  /* Sidebar overlay for mobile */
+  .ant-layout-sider {
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15) !important;
+  }
+
+  /* Touch-friendly menu items */
+  .ant-menu-item {
+    height: 48px !important;
+    line-height: 48px !important;
+    margin: 4px 0 !important;
+  }
+
+  /* Better mobile navigation */
+  .ant-menu-inline .ant-menu-item {
+    padding-left: 24px !important;
+  }
+
+  /* Prevent text selection on mobile navigation */
+  .ant-menu {
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+  }
+}
+
+/* Ensure proper z-index layering */
+.mobile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 200;
+}
+
+.mobile-sidebar {
+  z-index: 300;
+}
+
+/* Smooth animations for sidebar */
+.ant-layout-sider {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Fix for touch scrolling on mobile */
+@media (max-width: 768px) {
+  .ant-layout-content {
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Enhanced menu button visibility */
+.menu-toggle-btn {
+  min-width: 40px !important;
+  min-height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+@media (max-width: 768px) {
+  .menu-toggle-btn {
+    min-width: 44px !important;
+    min-height: 44px !important;
+  }
+
+  .menu-toggle-btn .anticon {
+    font-size: 20px !important;
+  }
+}
