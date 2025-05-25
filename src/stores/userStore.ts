@@ -20,7 +20,7 @@ interface UserState {
 
 export const useUserStore = create<UserState>()(
   devtools(
-    (set, get) => ({
+    (set) => ({
       // Initial state
       users: [],
       selectedUser: null,
