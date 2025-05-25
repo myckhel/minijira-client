@@ -41,6 +41,7 @@ export function RegisterForm() {
     }
 
     try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { confirmPassword, ...registerData } = values;
       await register(registerData);
       message.success("Registration successful! Welcome aboard!");
@@ -54,9 +55,9 @@ export function RegisterForm() {
   const displayError = localError || error;
 
   return (
-    <div>
+    <div className="w-full">
       <div className="text-center mb-6">
-        <h2 className="text-2xl font-semibold text-gray-900">
+        <h2 className="text-xl font-semibold text-gray-900">
           Create your account
         </h2>
         <p className="mt-2 text-sm text-gray-600">
@@ -91,6 +92,7 @@ export function RegisterForm() {
         layout="vertical"
         size="large"
         autoComplete="off"
+        className="w-full"
       >
         <Form.Item
           name="name"
@@ -105,6 +107,7 @@ export function RegisterForm() {
             prefix={<UserOutlined className="text-gray-400" />}
             placeholder="Enter your full name"
             autoComplete="name"
+            className="h-11"
           />
         </Form.Item>
 
@@ -120,6 +123,7 @@ export function RegisterForm() {
             prefix={<MailOutlined className="text-gray-400" />}
             placeholder="Enter your email"
             autoComplete="email"
+            className="h-11"
           />
         </Form.Item>
 
@@ -136,6 +140,7 @@ export function RegisterForm() {
             prefix={<LockOutlined className="text-gray-400" />}
             placeholder="Create a password"
             autoComplete="new-password"
+            className="h-11"
           />
         </Form.Item>
 
@@ -160,23 +165,24 @@ export function RegisterForm() {
             prefix={<LockOutlined className="text-gray-400" />}
             placeholder="Confirm your password"
             autoComplete="new-password"
+            className="h-11"
           />
         </Form.Item>
 
-        <Form.Item className="mb-0">
+        <Form.Item className="mb-0 mt-6">
           <Button
             type="primary"
             htmlType="submit"
             loading={isLoading}
             block
-            className="h-10 font-medium"
+            className="h-11 font-medium text-base"
           >
             {isLoading ? "Creating account..." : "Create account"}
           </Button>
         </Form.Item>
       </Form>
 
-      <div className="mt-4 text-center">
+      <div className="mt-6 text-center">
         <p className="text-xs text-gray-500">
           By creating an account, you agree to our Terms of Service and Privacy
           Policy
